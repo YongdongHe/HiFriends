@@ -12,12 +12,15 @@
             android:name=".MainActivity"
             android:label="@string/actionbar_name"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".auth.AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".auth.LoginActivity"/>
+        <activity android:name=".auth.RegisterActivity"/>
     </application>
 
 </manifest>
