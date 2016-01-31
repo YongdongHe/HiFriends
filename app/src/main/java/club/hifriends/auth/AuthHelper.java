@@ -1,12 +1,24 @@
 package club.hifriends.auth;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.NetworkOnMainThreadException;
+import android.widget.Toast;
 
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+
+import club.hifriends.BaseAppCompatActivity;
+import club.hifriends.BaseBlankActivity;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -15,51 +27,87 @@ import okhttp3.Response;
  */
 public class AuthHelper {
     private Context context;
-    public static String url = "http://139.129.23.136:8000/";
-    public AuthHelper(Context context){
-        this.context = context;
+    private Activity activity;
+//    public static String url = "http://139.129.23.136:8000/";
+    public static String url = "http://192.168.1.107:8000/";//测试用本地服务
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
+    public AuthHelper(final Activity activity){
+        this.activity = activity;
+        this.context = activity.getBaseContext();
+        this.pref = activity.getSharedPreferences("hifriends", Context.MODE_PRIVATE);
+        this.editor = activity.getSharedPreferences("hifriends", Context.MODE_PRIVATE).edit();
     }
 
-    public void checkAuth()throws NetworkOnMainThreadException {
+    public void checkAuth(){
         //检查uuid的正确情况，如果正确则更新个人信息
         String uuid = getUUID();
-
-    }
-
-    public String doLogin(String phone,String psd)throws AuthExcepetion{
-        //联网登录，获取并保存uuid,然后返回
+        if(uuid == ""){
+            Toast.makeText(context, "请登录", Toast.LENGTH_SHORT);
+            doLogout();
+            return;
+        }
         OkHttpUtils
                 .post()
-                .url(AuthHelper.url+"auth/dolog")
-                .addParams("phone",phone)
-                .addParams("psd",psd)
+                .url(AuthHelper.url+"user/info")
+                .addParams("uuid",uuid)
                 .build()
-                .execute(new Callback() {
-                    @Override
-                    public Object parseNetworkResponse(Response response) throws Exception {
-                        return null;
-                    }
-
+                .execute(new StringCallback() {
                     @Override
                     public void onError(Call call, Exception e) {
-
+                        //错误检测
+                        if (e instanceof SocketTimeoutException) {
+                            Toast.makeText(context, "网络连接超时", Toast.LENGTH_SHORT);
+                        } else if (e instanceof ConnectException) {
+                            Toast.makeText(context, "网络连接错误", Toast.LENGTH_SHORT);
+                        } else {
+                            Toast.makeText(context, "\"未知错误\"", Toast.LENGTH_SHORT);
+                        }
                     }
 
                     @Override
-                    public void onResponse(Object response) {
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json_res = new JSONObject(response);
+                            if (json_res.getInt("code") == 200) {
+                                ////如果返回的状态码是200则说明uuid正确，则更新各类个人信息
+                                setAuthCache("name", json_res.getString("name"));
+                                setAuthCache("phone", json_res.getString("phone"));
+                            } else {
+                                //如果返回的状态码不是200则说明uuid不对，需要重新授权,则注销当前登录
+                                Toast.makeText(context, "登录信息已失效，请重新登录", Toast.LENGTH_SHORT);
+                                doLogout();
 
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
-        return null;
     }
 
-    public void doLogout() {
+
+
+
+    public void doLogout() throws ClassCastException{
+        //清除信息
         setAuthCache("uuid", "");
+        setAuthCache("name","");
+        setAuthCache("phone","");
+        //跳转到登录页
+        Intent intent = new Intent(context,LoginBlankActivity.class);
+        if(activity instanceof BaseAppCompatActivity){
+            ((BaseAppCompatActivity) activity).startActivityAndFinish(intent);
+        }else if (activity instanceof BaseBlankActivity) {
+            ((BaseBlankActivity) activity).startActivityAndFinish(intent);
+        }else{
+            throw new ClassCastException();
+        }
     }
+
 
     public String getUUID(){
         //获得存储的uuid
-        SharedPreferences pref = context.getSharedPreferences("hifriends", Context.MODE_PRIVATE);
         String uuid = pref.getString("uuid","");
         return uuid;
     }
@@ -74,22 +122,15 @@ public class AuthHelper {
          * sex          性别
          */
         //获得存储的某项信息
-        SharedPreferences pref = context.getSharedPreferences("hifriends", Context.MODE_PRIVATE);
         String authCache = pref.getString(cacheName,"");
         return authCache;
     }
 
     public boolean setAuthCache(String cacheName,String cacheValue){
         //用于更新存储的某项信息
-        SharedPreferences.Editor editor= context.getSharedPreferences("hifriends",context.MODE_PRIVATE).edit();
         editor.putString(cacheName, cacheValue);
         return editor.commit();
     }
 
 }
 
-class AuthExcepetion extends Exception{
-    public AuthExcepetion(){
-
-    }
-}

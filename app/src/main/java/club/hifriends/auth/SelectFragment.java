@@ -30,14 +30,14 @@ public class SelectFragment extends Fragment {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity().getBaseContext(),LoginActivity.class));
+                getActivity().startActivity(new Intent(getActivity().getBaseContext(),LoginBlankActivity.class));
             }
         });
         Button btn_register = (Button)fragmentContainer.findViewById(R.id.auth_btn_register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().startActivity(new Intent(getActivity().getBaseContext(),RegisterActivity.class));
+                getActivity().startActivity(new Intent(getActivity().getBaseContext(),RegisterBlankActivity.class));
             }
         });
         return fragmentContainer;

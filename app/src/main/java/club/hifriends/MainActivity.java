@@ -1,5 +1,8 @@
 package club.hifriends;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,11 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
+import club.hifriends.auth.AuthException;
+import club.hifriends.setting.SettingActivity;
+
+public class MainActivity extends BaseAppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     SwipeRefreshLayout swipeRefreshLayout;
     NavigationView navigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +86,24 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(getBaseContext(), SettingActivity.class));
+        }else if(id == R.id.action_logout){
+            AlertDialog.Builder confirmDialog =new AlertDialog.Builder(this);
+            confirmDialog.setTitle("确认");
+            confirmDialog.setMessage("确定要退出登录吗？");
+            confirmDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    getAuthHepler().doLogout();
+                }
+            });
+            confirmDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    showMsg("请继续享受与朋友们相处的时光吧~");
+                }
+            });
+            confirmDialog.create().show();
         }
 
         return super.onOptionsItemSelected(item);

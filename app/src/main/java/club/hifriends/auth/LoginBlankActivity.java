@@ -1,6 +1,5 @@
 package club.hifriends.auth;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +15,7 @@ import org.json.JSONObject;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
-import club.hifriends.BaseActivity;
+import club.hifriends.BaseBlankActivity;
 import club.hifriends.MainActivity;
 import club.hifriends.R;
 import okhttp3.Call;
@@ -25,7 +24,7 @@ import okhttp3.Call;
 /**
  * Created by heyon on 2016/1/28.
  */
-public class LoginActivity extends BaseActivity {
+public class LoginBlankActivity extends BaseBlankActivity {
     EditText et_phone;
     EditText et_psd;
     Button btn_log;

@@ -1,6 +1,5 @@
 package club.hifriends.auth;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -21,7 +19,7 @@ import org.json.JSONObject;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
-import club.hifriends.BaseActivity;
+import club.hifriends.BaseBlankActivity;
 import club.hifriends.R;
 import okhttp3.Call;
 
@@ -29,7 +27,7 @@ import okhttp3.Call;
 /**
  * Created by heyon on 2016/1/28.
  */
-public class RegisterActivity extends BaseActivity {
+public class RegisterBlankActivity extends BaseBlankActivity {
     Button btn_getauth;
     Button btn_register;
     EditText et_phone;
@@ -178,7 +176,7 @@ public class RegisterActivity extends BaseActivity {
                                     if (json_res.getInt("code") == 200) {
                                         String uuid = json_res.getString("uuid");
                                         getAuthHepler().setAuthCache("uuid", uuid);
-                                        startActivity(new Intent(getBaseContext(), LoginActivity.class));
+                                        startActivity(new Intent(getBaseContext(), LoginBlankActivity.class));
                                         finish();
                                     }
                                 } catch (JSONException e) {
