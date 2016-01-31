@@ -3,4 +3,5 @@
     <color name="colorPrimary">#319350</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#c5c6c5</color>
+    <color name="colorActivityListTips">#565555</color>
 </resources>

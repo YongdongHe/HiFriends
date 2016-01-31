@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_activity_item_tips"
+        android:textSize="13sp"
+        android:textColor="@color/colorActivityListTips"
+        android:text="活动简介"/>
+
+    <!--活动标签-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/llayout_activity_item_label"
+        android:layout_below="@id/tv_activity_item_tips"
+        android:orientation="horizontal">
+    </LinearLayout>
+
+    <!--活动内容-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_activity_item_content"
+        android:layout_below="@+id/llayout_activity_item_label"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:textSize="15sp"
+        android:maxHeight="70dp"
+        android:text="活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容活动内容"
+        android:textColor="#000000"/>
+
+
+    <!--显示参与人数等信息的layout-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_activity_item_content"
+        android:orientation="horizontal"
+        android:id="@+id/llayout_activity_item_info">
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/ic_timer_auto_24dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp"
+            android:text="0"/>
+    </LinearLayout>
+
+    <!--活动发起时间-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_activity_item_time"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_activity_item_content"
+        android:textSize="13sp"
+        android:textColor="@color/colorActivityListTips"
+        android:text="2016-01-08 21:41:00"/>
+
+</RelativeLayout>

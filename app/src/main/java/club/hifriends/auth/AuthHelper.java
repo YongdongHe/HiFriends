@@ -1,8 +1,6 @@
 package club.hifriends.auth;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +18,6 @@ import java.net.SocketTimeoutException;
 import club.hifriends.BaseAppCompatActivity;
 import club.hifriends.BaseBlankActivity;
 import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * Created by heyon on 2016/1/29.
@@ -92,10 +89,10 @@ public class AuthHelper {
     public void doLogout() throws ClassCastException{
         //清除信息
         setAuthCache("uuid", "");
-        setAuthCache("name","");
-        setAuthCache("phone","");
+        setAuthCache("name", "");
+        setAuthCache("phone", "");
         //跳转到登录页
-        Intent intent = new Intent(context,LoginBlankActivity.class);
+        Intent intent = new Intent(context,LoginActivity.class);
         if(activity instanceof BaseAppCompatActivity){
             ((BaseAppCompatActivity) activity).startActivityAndFinish(intent);
         }else if (activity instanceof BaseBlankActivity) {

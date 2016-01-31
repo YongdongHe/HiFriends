@@ -24,7 +24,7 @@ import okhttp3.Call;
 /**
  * Created by heyon on 2016/1/28.
  */
-public class LoginBlankActivity extends BaseBlankActivity {
+public class LoginActivity extends BaseBlankActivity {
     EditText et_phone;
     EditText et_psd;
     Button btn_log;

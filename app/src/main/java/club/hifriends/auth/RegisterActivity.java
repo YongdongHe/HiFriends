@@ -27,7 +27,7 @@ import okhttp3.Call;
 /**
  * Created by heyon on 2016/1/28.
  */
-public class RegisterBlankActivity extends BaseBlankActivity {
+public class RegisterActivity extends BaseBlankActivity {
     Button btn_getauth;
     Button btn_register;
     EditText et_phone;
@@ -176,7 +176,7 @@ public class RegisterBlankActivity extends BaseBlankActivity {
                                     if (json_res.getInt("code") == 200) {
                                         String uuid = json_res.getString("uuid");
                                         getAuthHepler().setAuthCache("uuid", uuid);
-                                        startActivity(new Intent(getBaseContext(), LoginBlankActivity.class));
+                                        startActivity(new Intent(getBaseContext(), LoginActivity.class));
                                         finish();
                                     }
                                 } catch (JSONException e) {
