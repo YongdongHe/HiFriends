@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="club.hifriends">
-
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,7 +27,12 @@
             android:name=".setting.SettingActivity"
             android:label="@string/title_activity_setting"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.LookInfoActivity"></activity>
+        <activity
+            android:name=".activity.LookInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="@string/title_activity_look_info">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,11 +1,15 @@
 package club.hifriends.activity;
 
+import android.app.Activity;
 import android.content.Context;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -24,12 +28,19 @@ public class UserListAdapter extends ArrayAdapter<Partner>{
 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent) {
-        Partner partner = getItem(position);
+        final Partner partner = getItem(position);
         final View view = LayoutInflater.from(getContext()).inflate(resourceID, null);//为子项加载布局
         TextView tv_phone = (TextView)view.findViewById(R.id.tv_phone);
         TextView tv_name = (TextView)view.findViewById(R.id.tv_name);
         tv_name.setText(partner.getName());
         tv_phone.setText(partner.getPhone());
+        ImageView calltbn = (ImageView)view.findViewById(R.id.btn_callpartner);
+        calltbn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         return  view;
     }
 }

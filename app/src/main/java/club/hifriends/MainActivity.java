@@ -85,6 +85,7 @@ public class MainActivity extends BaseAppCompatActivity
         });
 
 
+        onRefreshActivityList();
 
     }
 
@@ -203,7 +204,6 @@ public class MainActivity extends BaseAppCompatActivity
                                 ActivityListAdapter activityListAdapter =
                                         new ActivityListAdapter(MainActivity.this, R.layout.listview_activity_item, activityItemArrayList);
                                 lt_activity.setAdapter(activityListAdapter);
-                                Toast.makeText(getApplicationContext(),"刷新成功",Toast.LENGTH_SHORT).show();
                             } else {
                                 showMsg("服务器发生了未知错误，请稍后再试。");
 
