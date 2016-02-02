@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class UserListAdapter extends ArrayAdapter<Partner>{
     }
 
     @Override
-    public View getView(int position, final View convertView, ViewGroup parent) {
+    public View getView(int position, final View convertView, final ViewGroup parent) {
         final Partner partner = getItem(position);
         final View view = LayoutInflater.from(getContext()).inflate(resourceID, null);//为子项加载布局
         TextView tv_phone = (TextView)view.findViewById(R.id.tv_phone);
@@ -38,7 +39,13 @@ public class UserListAdapter extends ArrayAdapter<Partner>{
         calltbn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try{
+                    Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + partner.getPhone()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(intent);
+                }catch (SecurityException e){
+                    Toast.makeText(getContext(),"HiFriends尚未获得拨打电话的权限，请开启后再试。",Toast.LENGTH_SHORT).show();
+                }
             }
         });
         return  view;

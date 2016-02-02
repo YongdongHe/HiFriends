@@ -30,7 +30,7 @@ public class AuthActivity extends Activity {
             public void run() {
                 finishWelcome();
             }
-        },2000);
+        },500);
     }
 
     public boolean checkAuth(){
