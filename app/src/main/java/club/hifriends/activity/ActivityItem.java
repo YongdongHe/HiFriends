@@ -5,17 +5,19 @@ package club.hifriends.activity;
  */
 public class ActivityItem {
     private String tips;//顶端提示
-    private String leader;
+    private String leader;//活动发起者
     private String time;
-    private String label;
-    private String activity_id;
-    private String description;//活动描述
-    public ActivityItem(String leader, String time, String label, String activity_id, String description) {
+    private String label;//活动标签
+    private String activity_id;//活动id
+    private String title;
+    private String content;//活动内容
+    public ActivityItem(String leader, String time, String label, String activity_id, String title,String content) {
         this.leader = leader;
         this.time = time;
         this.label = label;
         this.activity_id = activity_id;
-        this.description = description;
+        this.title = title;
+        this.content = content;
     }
 
     public String getTips() {
@@ -38,7 +40,11 @@ public class ActivityItem {
         return activity_id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getTitle(){
+        return title;
+    }
+
+    public String getContent() {
+        return content;
     }
 }

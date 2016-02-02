@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_name"
+        android:textSize="17sp"
+        android:text="用户名"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_phone"
+        android:textSize="17sp"
+        android:layout_toLeftOf="@+id/btn_callpartner"
+        android:textColor="@color/colorPrimary"
+        android:text="00000000000"/>
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="16dp"
+        android:id="@+id/btn_callpartner"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ic_local_phone_24dp_dark"
+        />
+</RelativeLayout>

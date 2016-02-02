@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
@@ -23,17 +24,13 @@ public class AuthActivity extends Activity {
 
         welcomeFragment = new WelcomeFragment();
         getFragmentManager().beginTransaction().replace(R.id.activity_auth_container,welcomeFragment).commit();
-        if(checkAuth())
-        {
-            Intent intent = new Intent(getBaseContext(), MainActivity.class);
-            startActivity(intent);
-            finish();//释放当前的activity
-        }else{
-            Toast.makeText(AuthActivity.this, "请先登录或者注册", Toast.LENGTH_SHORT).show();
-            selectFragment = new SelectFragment();
-            getFragmentManager().beginTransaction().replace(R.id.activity_auth_container,selectFragment).commit();
-        }
-
+        //延时结束欢迎界面
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finishWelcome();
+            }
+        },2000);
     }
 
     public boolean checkAuth(){
@@ -48,6 +45,18 @@ public class AuthActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        getFragmentManager().beginTransaction().replace(R.id.activity_auth_container,selectFragment).commit();
+    }
+
+    public void finishWelcome(){
+        if(checkAuth())
+        {
+            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+            startActivity(intent);
+            finish();//释放当前的activity
+        }else{
+            Toast.makeText(AuthActivity.this, "请先登录或者注册", Toast.LENGTH_SHORT).show();
+            selectFragment = new SelectFragment();
+            getFragmentManager().beginTransaction().replace(R.id.activity_auth_container,selectFragment).commit();
+        }
     }
 }

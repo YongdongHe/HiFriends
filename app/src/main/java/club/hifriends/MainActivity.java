@@ -50,8 +50,11 @@ public class MainActivity extends BaseAppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //toolbar设置
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -135,6 +138,8 @@ public class MainActivity extends BaseAppCompatActivity
                 }
             });
             confirmDialog.create().show();
+        }else if(id == R.id.action_message){
+            showMsg("获取消息");
         }
 
         return super.onOptionsItemSelected(item);
@@ -185,6 +190,7 @@ public class MainActivity extends BaseAppCompatActivity
 
                     @Override
                     public void onResponse(String response) {
+                        swipeRefreshLayout.setRefreshing(false);
                         try {
                             JSONObject json_res = new JSONObject(response);
                             if (json_res.getInt("code") == 200) {
@@ -198,9 +204,9 @@ public class MainActivity extends BaseAppCompatActivity
                                         new ActivityListAdapter(MainActivity.this, R.layout.listview_activity_item, activityItemArrayList);
                                 lt_activity.setAdapter(activityListAdapter);
                                 Toast.makeText(getApplicationContext(),"刷新成功",Toast.LENGTH_SHORT).show();
-                                swipeRefreshLayout.setRefreshing(false);
                             } else {
                                 showMsg("服务器发生了未知错误，请稍后再试。");
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

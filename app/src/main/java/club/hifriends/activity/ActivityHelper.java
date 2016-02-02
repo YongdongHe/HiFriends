@@ -1,5 +1,7 @@
 package club.hifriends.activity;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,16 +18,19 @@ public class ActivityHelper {
             throws JSONException{
         ArrayList<ActivityItem> list = new ArrayList<>();
         //遍历json数组
-        for(int i = 1;i<=jsonArray.length();i++){
+        Log.d("activityHelper",jsonArray.length()+"");
+        for(int i = 0;i<jsonArray.length();i++){
             JSONObject activityItem = jsonArray.optJSONObject(i);
             list.add(new ActivityItem(
                     activityItem.getString("leader"),
                     activityItem.getString("time"),
-                    activityItem.getString("des"),
+                    activityItem.getString("label"),
                     activityItem.getString("id"),
-                    activityItem.getString("activity")
+                    activityItem.getString("title"),
+                    activityItem.getString("content")
             ));
         }
         return list;
     }
+
 }

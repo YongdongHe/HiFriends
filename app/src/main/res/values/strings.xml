@@ -4,13 +4,17 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <!--设置-->
+    <!--菜单-->
     <string name="action_settings">设置</string>
     <string name="action_logout">退出登录</string>
+    <string name="action_message">消息盒子</string>
+    <string name="action_search">搜索</string>
+
+
     <string name="actionbar_name">Hi</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_setting">SettingActivity</string>
-    <string name="title_activity_look_info">LookInfoActivity</string>
+    <string name="title_activity_setting">设置</string>
+    <string name="title_activity_look_info">活动</string>
 </resources>

@@ -1,10 +1,12 @@
 package club.hifriends.auth;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -28,6 +30,8 @@ public class LoginActivity extends BaseBlankActivity {
     EditText et_phone;
     EditText et_psd;
     Button btn_log;
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,7 @@ public class LoginActivity extends BaseBlankActivity {
         et_psd = (EditText)findViewById(R.id.et_login_psd);
         btn_log = (Button)findViewById(R.id.btn_login_login);
 
+
         btn_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +52,11 @@ public class LoginActivity extends BaseBlankActivity {
     }
 
     private void doLogin(){
+        btn_log.setEnabled(false);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("登录中");
+        progressDialog.show();
         String phone = et_phone.getText().toString();
         String psd = et_psd.getText().toString();
         OkHttpUtils
@@ -58,6 +68,8 @@ public class LoginActivity extends BaseBlankActivity {
                 .execute(new StringCallback() {
                              @Override
                              public void onError(Call call, Exception e) {
+                                 progressDialog.dismiss();
+                                 btn_log.setEnabled(true);
                                  if (e instanceof SocketTimeoutException) {
                                      showMsg("网路连接超时");
                                  } else if (e instanceof ConnectException) {
@@ -65,9 +77,12 @@ public class LoginActivity extends BaseBlankActivity {
                                  } else {
                                      showMsg("未知错误");
                                  }
+
                              }
                              @Override
                              public void onResponse(String response) {
+                                 progressDialog.dismiss();
+                                 btn_log.setEnabled(true);
                                  try {
                                      JSONObject json_res = new JSONObject(response);
                                      showMsg(json_res.getString("content"));
