@@ -1,8 +1,5 @@
 package club.hifriends.activity;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -11,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import club.hifriends.activity.beans.ActivityItem;
 
 
 /**

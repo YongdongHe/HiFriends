@@ -1,4 +1,4 @@
-package club.hifriends.activity;
+package club.hifriends.activity.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import club.hifriends.R;
+import club.hifriends.activity.LookInfoActivity;
+import club.hifriends.activity.beans.ActivityItem;
 
 
 /**

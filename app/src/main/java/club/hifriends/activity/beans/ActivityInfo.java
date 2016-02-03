@@ -1,6 +1,4 @@
-package club.hifriends.activity;
-
-import android.app.Activity;
+package club.hifriends.activity.beans;
 
 import org.json.JSONArray;
 import org.json.JSONException;

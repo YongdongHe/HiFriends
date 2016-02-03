@@ -44,7 +44,7 @@ public class RegisterActivity extends BaseBlankActivity {
         btn_getauth = (Button)findViewById(R.id.btn_register_getauth);
         btn_register = (Button)findViewById(R.id.btn_register_register);
         et_phone = (EditText)findViewById(R.id.et_register_phone);
-        et_authcode = (EditText)findViewById(R.id.et_register_phone);
+        et_authcode = (EditText)findViewById(R.id.et_register_auth);
         et_psd = (EditText)findViewById(R.id.et_register_psd);
 
 

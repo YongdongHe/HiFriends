@@ -5,4 +5,5 @@
     <color name="colorAccent">#c5c6c5</color>
     <color name="colorActivityListTips">#565555</color>
     <color name="colorDark">#565555</color>
+    <color name="colorSmallDark">#dedede</color>
 </resources>

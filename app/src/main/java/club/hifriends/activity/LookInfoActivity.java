@@ -1,6 +1,5 @@
 package club.hifriends.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +20,8 @@ import java.net.SocketTimeoutException;
 
 import club.hifriends.BaseAppCompatActivity;
 import club.hifriends.R;
+import club.hifriends.activity.adapter.UserListAdapter;
+import club.hifriends.activity.beans.ActivityInfo;
 import club.hifriends.auth.AuthHelper;
 import okhttp3.Call;
 
@@ -54,7 +55,7 @@ public class LookInfoActivity extends BaseAppCompatActivity {
                 onBackPressed();
             }
         });
-        toolbar.setTitle("设置");
+        toolbar.setTitle("活动详情");
 
         //控件初始化
         tv_title = (TextView)findViewById(R.id.tv_activity_info_title);

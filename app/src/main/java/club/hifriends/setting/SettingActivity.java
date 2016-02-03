@@ -22,7 +22,6 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
         toolbar.setTitle("设置");
-        setSupportActionBar(toolbar);
     }
 
 }

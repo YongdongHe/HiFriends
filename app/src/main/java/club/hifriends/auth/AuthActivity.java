@@ -8,13 +8,14 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
+import club.hifriends.BaseBlankActivity;
 import club.hifriends.MainActivity;
 import club.hifriends.R;
 
 /**
  * Created by heyon on 2016/1/28.
  */
-public class AuthActivity extends Activity {
+public class AuthActivity extends BaseBlankActivity {
     WelcomeFragment welcomeFragment;
     SelectFragment selectFragment;
     @Override
@@ -50,6 +51,8 @@ public class AuthActivity extends Activity {
     public void finishWelcome(){
         if(checkAuth())
         {
+            //如果uuid存在则获取用户信息并且打开主界面
+            getAuthHepler().checkAuth();
             Intent intent = new Intent(getBaseContext(), MainActivity.class);
             startActivity(intent);
             finish();//释放当前的activity

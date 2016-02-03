@@ -25,8 +25,8 @@ import okhttp3.Call;
 public class AuthHelper {
     private Context context;
     private Activity activity;
-//    public static String url = "http://139.129.23.136:8000/";
-    public static String url = "http://192.168.1.107:8000/";//测试用本地服务
+    public static String url = "http://139.129.23.136:8000/";
+//    public static String url = "http://192.168.1.107:8000/";//测试用本地服务
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
     public AuthHelper(final Activity activity){
@@ -45,7 +45,7 @@ public class AuthHelper {
             return;
         }
         OkHttpUtils
-                .post()
+                .get()
                 .url(AuthHelper.url+"user/info")
                 .addParams("uuid",uuid)
                 .build()
@@ -68,8 +68,8 @@ public class AuthHelper {
                             JSONObject json_res = new JSONObject(response);
                             if (json_res.getInt("code") == 200) {
                                 ////如果返回的状态码是200则说明uuid正确，则更新各类个人信息
-                                setAuthCache("name", json_res.getString("name"));
-                                setAuthCache("phone", json_res.getString("phone"));
+                                setAuthCache("name", json_res.getJSONObject("content").getString("name"));
+                                setAuthCache("phone", json_res.getJSONObject("content").getString("phone"));
                             } else {
                                 //如果返回的状态码不是200则说明uuid不对，需要重新授权,则注销当前登录
                                 Toast.makeText(context, "登录信息已失效，请重新登录", Toast.LENGTH_SHORT);

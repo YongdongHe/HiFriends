@@ -1,4 +1,4 @@
-package club.hifriends.activity;
+package club.hifriends.activity.beans;
 
 /**
  * Created by heyon on 2016/2/2.

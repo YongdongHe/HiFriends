@@ -3,23 +3,19 @@ package club.hifriends;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -33,10 +29,11 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 
 import club.hifriends.activity.ActivityHelper;
-import club.hifriends.activity.ActivityItem;
-import club.hifriends.activity.ActivityListAdapter;
-import club.hifriends.auth.AuthException;
+import club.hifriends.activity.PublishNewActivity;
+import club.hifriends.activity.beans.ActivityItem;
+import club.hifriends.activity.adapter.ActivityListAdapter;
 import club.hifriends.auth.AuthHelper;
+import club.hifriends.setting.InfoEditActivity;
 import club.hifriends.setting.SettingActivity;
 import okhttp3.Call;
 
@@ -44,6 +41,8 @@ public class MainActivity extends BaseAppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     SwipeRefreshLayout swipeRefreshLayout;
     NavigationView navigationView;
+    TextView tv_name;
+    TextView tv_phone;
     ListView lt_activity;
 
     @Override
@@ -60,8 +59,7 @@ public class MainActivity extends BaseAppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, PublishNewActivity.class));
             }
         });
 
@@ -73,6 +71,13 @@ public class MainActivity extends BaseAppCompatActivity
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        //侧边栏布局加载和控件获取
+        View navigationViewHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        tv_name = (TextView)navigationViewHeader.findViewById(R.id.tv_name);
+        tv_phone =(TextView)navigationViewHeader.findViewById(R.id.tv_phone);
+
 
         lt_activity = (ListView)findViewById(R.id.listview_activity_list);
 
@@ -86,7 +91,6 @@ public class MainActivity extends BaseAppCompatActivity
 
 
         onRefreshActivityList();
-
     }
 
     @Override
@@ -121,7 +125,7 @@ public class MainActivity extends BaseAppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            startActivity(new Intent(getBaseContext(), SettingActivity.class));
+            startActivity(new Intent(MainActivity.this, SettingActivity.class));
         }else if(id == R.id.action_logout){
             AlertDialog.Builder confirmDialog =new AlertDialog.Builder(this);
             confirmDialog.setTitle("确认");
@@ -152,18 +156,25 @@ public class MainActivity extends BaseAppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_home) {
+            // 关闭侧边栏回到首页
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.nav_star) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
+        } else if (id == R.id.nav_settings) {
+            //打开设置
+            startActivity(new Intent(getBaseContext(), SettingActivity.class));
+        } else if(id == R.id.nav_info){
+            startActivity(new Intent(getBaseContext(), InfoEditActivity.class));
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_aboutus) {
+            AlertDialog.Builder normalDia=new AlertDialog.Builder(this);
+            normalDia.setTitle("关于我们");
+            normalDia.setMessage("制作：he-real\n联系方式:609978993");
+            normalDia.setPositiveButton("确定", null);
+            normalDia.create().show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -172,7 +183,11 @@ public class MainActivity extends BaseAppCompatActivity
     }
 
 
+
+    //刷新活动页
     public void onRefreshActivityList(){
+        tv_name.setText(getAuthHepler().getAuthCache("name"));
+        tv_phone.setText(getAuthHepler().getAuthCache("phone"));
         OkHttpUtils
                 .get()
                 .url(AuthHelper.url+"activity/list")
@@ -195,7 +210,7 @@ public class MainActivity extends BaseAppCompatActivity
                         try {
                             JSONObject json_res = new JSONObject(response);
                             if (json_res.getInt("code") == 200) {
-                                showMsg("刷新成功");
+//                                showMsg("已获取最新活动。");
                                 JSONArray activiesArray = json_res.getJSONArray("activities");
                                 //将json数组转化为adapter可用的activityArrayList
                                 ArrayList<ActivityItem> activityItemArrayList =

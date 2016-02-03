@@ -1,6 +1,5 @@
-package club.hifriends.activity;
+package club.hifriends.activity.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import club.hifriends.R;
+import club.hifriends.activity.beans.Partner;
 
 /**
  * Created by heyon on 2016/2/2.
