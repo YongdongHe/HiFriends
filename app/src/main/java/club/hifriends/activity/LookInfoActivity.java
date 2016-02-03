@@ -108,6 +108,9 @@ public class LookInfoActivity extends BaseAppCompatActivity {
                                 tv_content.setText(activityInfo.getContent());
                                 liv_partner.setAdapter(new UserListAdapter(getBaseContext(),
                                         R.layout.listview_activity_info_item, activityInfo.getPartnerArrayList()));
+
+                                //根据listview的item数目和高度设置本身的高度，以保证listview能全部展开展示
+                                UserListAdapter.setListViewHeightBasedOnChildren(liv_partner);
                             } else if (json_res.getInt("code") == 404) {
                                 Toast.makeText(getBaseContext(),"该活动不存在或者已被删除",Toast.LENGTH_SHORT).show();
                                 onBackPressed();

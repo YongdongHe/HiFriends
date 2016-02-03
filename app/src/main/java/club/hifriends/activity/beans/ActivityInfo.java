@@ -24,11 +24,11 @@ public class ActivityInfo {
         this.activity_id = response.getString("activity_id");
         this.title = response.getString("title");
         this.content = response.getString("content");
-        partnerArrayList = new ArrayList<>();
+        this.partnerArrayList = new ArrayList<>();
         JSONArray partners = response.getJSONArray("partners");
         for(int i = 0;i<partners.length();i++){
             JSONObject partner = partners.optJSONObject(i);
-            partnerArrayList.add(new Partner(
+            this.partnerArrayList.add(new Partner(
                             partner.getString("name"),
                             partner.getString("id"),
                             partner.getString("phone")
